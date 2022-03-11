@@ -1,0 +1,23 @@
+/* the algorithm will work even if the user start the sentence with "."
+/*the point will not be count in the length of the sentence */
+ALGORITHM read_a_sentence
+VAR
+    len_sentence ,  number_of_vowels : INTEGER := 0;
+    number_of_words : INTEGER := 1 /* by default there will always be a full sentence */
+    caracter : CHAR;
+BEGIN
+    read(caracter)
+    WHILE (caracter <> ".") DO
+        len_sentence := len_sentence + 1
+        IF (caracter = " " ) THEN
+            number_of_words := number_of_words + 1 
+        END_IF
+        IF (caracter in ["a","e","i","o","u","y"] ) THEN
+            number_of_vowels := number_of_vowels + 1
+        END_IF
+        read(caracter)
+    END_WHILE
+    Write(len_sentence) /*or the length sentence will be equal to len_sentence - number_of_words if we consider the space not a caracter*/
+    Write(number_of_words)
+    Write(number_of_vowels)
+END
