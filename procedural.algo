@@ -1,0 +1,95 @@
+// the ps variable will be called by reference because we will want the value passed to it to be changed after executing the procedure
+// the v1 and v2 arrays will be called by value because we don't want their values to be changed
+PROCEDURE dot_product(v1,v2 :ARRAY_OF FLOAT , VAR ps:FLOAT) 
+VAR
+    i : INTEGER
+BEGIN
+    FOR i FROM 0 TO v1.length-1 STEP 1  DO
+        ps += v1[i]*v2[i]
+    END_FOR
+
+END
+
+ALGORITHM vectors_orthogonalty
+VAR
+    i , j ,n , len : INTEGER
+    v1 , v2 : ARRAY_OF FLOAT[len]
+    ps : FLOAT :=0
+BEGIN
+    // taking the number of pairs
+    Read(n)
+    // working in a loop because we will check each pair whether it is orthogonal or not
+    FOR i FROM 1 TO n STEP 1  DO
+        // taking the two pairs of vectors from the user with their size
+        Write("give the size of the " + i + "pair ")
+        Read(len)
+        FOR j FROM 0 TO len-1 STEP 1  DO
+            Write("give the elements of the first vector :")
+            Read(v1[i])
+        END_FOR
+        
+        FOR j FROM 0 TO len-1 STEP 1  DO
+            Write("give the elements of the second vector :")
+            Read(v2[i])
+        END_FOR
+
+        // calculating the dot product of a given pair
+        // ps will be modified in the main algorithm because it is called by reference
+        dot_product(v1 ,v2 , ps)
+
+        // checking if the pair is orthogonal or not
+        IF (ps = 0) THEN
+            Write("the " + i + " two vectors are orthogonal")
+        ELSE
+            Write("the" + i + "two vectors are not orthogonal because their dot product is" + ps)
+        END_IF
+    END_FOR
+END
+
+
+
+
+
+//----------------- USING DOT PRODUCT FUCNTION INSTEAD OF PROCEDURE ----------------//
+FUNCTION dot_product(v1,v2 : ARRAY_OF FLOAT) : FLOAT
+VAR
+    i : INTEGER
+    ps : FLOAT := 0
+BEGIN
+    FOR i FROM 0 TO v1.length-1 STEP 1  DO
+        ps += v1[i]*v2[i]
+    END_FOR
+    RETURN ps ;
+END
+
+
+ALGORITHM vectors_orthogonalty
+VAR
+    i , j ,n , len : INTEGER
+    v1 , v2 : ARRAY_OF FLOAT[len]
+BEGIN
+    // taking the number of pairs
+    Read(n)
+    // working in a loop because we will check each pair whether it is orthogonal or not
+    FOR i FROM 1 TO n STEP 1  DO
+        // taking the two pairs of vectors from the user with their size
+        Write("give the size of the " + i + "pair ")
+        Read(len)
+        FOR j FROM 0 TO len-1 STEP 1  DO
+            Write("give the elements of the first vector :")
+            Read(v1[i])
+        END_FOR
+        
+        FOR j FROM 0 TO len-1 STEP 1  DO
+            Write("give the elements of the second vector :")
+            Read(v2[i])
+        END_FOR
+
+        // checking if the pair is orthogonal or not
+        IF (dot_product(v1,v2) = 0) THEN
+            Write("the " + i + " two vectors are orthogonal")
+        ELSE
+            Write("the" + i + "two vectors are not orthogonal because their dot product is" + dot_product(v1,v2))
+        END_IF
+    END_FOR
+END

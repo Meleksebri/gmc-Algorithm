@@ -1,0 +1,197 @@
+// ----------------------------------PROBLEM 1 ------------------------------ //
+// ----FIRST SOLUTION---- //
+ALGORITHM sum_of_distinct_elements
+VAR
+    first_set : ARRAY_OF INTEGER[n]
+    second_set : ARRAY_OF INTEGER[m]
+    n , m , i , j : INTEGER
+    sum : INTEGER :=0
+    found : BOOLEAN
+BEGIN
+    // getting the size of the two sets from the user
+    read(n)
+    read(m)
+    // filling the sets with elements given from the user
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        read(first_set[i])
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        read(second_set[i])
+    END_FOR
+
+    // searching for unique elements from both sets and adding it to  the sum using nested loop
+
+    // serching for uncommon elemnents from set1 in set2
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        found := false
+        FOR j FROM 0 TO m-1 STEP 1  DO
+            IF (first_set[i] = second_set[j]) THEN
+                found := true
+                break ;
+            END_IF
+        END_FOR
+        IF (found = false) THEN
+            sum += first_set[i]
+        END_IF
+    END_FOR
+
+    // serching for uncommon elemnents from set2 in set1
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        found := false
+        FOR j FROM 0 TO n-1 STEP 1  DO
+            IF (second_set[i] = first_set[j]) THEN
+                found := true
+                break ;
+            END_IF
+        END_FOR
+        IF (found = false) THEN
+            sum += second_set[i]
+        END_IF
+    END_FOR
+
+    Write(sum)
+END
+
+
+
+// ----SECOND SOLUTION---- //
+ALGORITHM sum_of_distinct_elements
+VAR
+    first_set : ARRAY_OF INTEGER[n]
+    second_set : ARRAY_OF INTEGER[m]
+    n , m , i , j : INTEGER
+    sum : INTEGER :=0
+    htab : HASH_TABLE <INTEGER,INTEGER>;
+BEGIN
+    // getting the size of the two sets from the user
+    read(n)
+    read(m)
+    // filling the sets with elements given from the user
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        read(first_set[i])
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        read(second_set[i])
+    END_FOR
+
+    // searching for unique elements from both sets and adding it to  the sum using a hashtable
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        IF (htab.lookup(first_set[i])) THEN
+            htab[first_set[i]] += 1
+        ELSE
+            htab[first_set[i]] = 1
+        END_IF
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        IF (htab.lookup(second_set[i])) THEN
+            htab[second_set[i]] += 1
+        ELSE
+            htab[second_set[i]] = 1
+        END_IF
+    END_FOR
+
+    // now we look for keys with a value of 1 in the htab
+    FOR i FROM 0 TO htab.keys().length-1 STEP 1  DO
+        IF (htab[htab.keys[i]] = 1) THEN
+            sum += htab.keys[i]
+        END_IF
+    END_FOR
+
+    Write(sum)
+
+END
+
+
+
+
+
+// ----------------------------------PROBLEM 2 ------------------------------ //
+// ----FIRST SOLUTION---- //
+ALGORITHM sum_of_overlaping_elements
+VAR
+    first_set : ARRAY_OF INTEGER[n]
+    second_set : ARRAY_OF INTEGER[m]
+    n , m , i , j : INTEGER
+    sum : INTEGER :=0
+BEGIN
+    // getting the size of the two sets from the user
+    read(n)
+    read(m)
+    // filling the sets with elements given from the user
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        read(first_set[i])
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        read(second_set[i])
+    END_FOR
+
+    // searching for same elements from both sets and adding it to  the sum using nested loop
+
+    // serching for common elements
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        found := false
+        FOR j FROM 0 TO m-1 STEP 1  DO
+            IF (first_set[i] = second_set[j]) THEN
+                sum += first_set[i]
+                break;
+            END_IF
+        END_FOR
+    END_FOR
+
+    Write(sum)
+END
+
+
+
+// ----SECOND SOLUTION---- //
+ALGORITHM sum_of_overlaping_elements
+VAR
+    first_set : ARRAY_OF INTEGER[n]
+    second_set : ARRAY_OF INTEGER[m]
+    n , m , i , j : INTEGER
+    sum : INTEGER :=0
+    htab : HASH_TABLE <INTEGER,INTEGER>;
+BEGIN
+    // getting the size of the two sets from the user
+    read(n)
+    read(m)
+    // filling the sets with elements given from the user
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        read(first_set[i])
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        read(second_set[i])
+    END_FOR
+
+    // searching for unique elements from both sets and adding it to  the sum using a hashtable
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        IF (htab.lookup(first_set[i])) THEN
+            htab[first_set[i]] += 1
+        ELSE
+            htab[first_set[i]] = 1
+        END_IF
+    END_FOR
+
+    FOR i FROM 0 TO m-1 STEP 1  DO
+        IF (htab.lookup(second_set[i])) THEN
+            htab[second_set[i]] += 1
+        ELSE
+            htab[second_set[i]] = 1
+        END_IF
+    END_FOR
+
+    // now we look for keys with a value greater than 1 in the htab
+    FOR i FROM 0 TO htab.keys().length-1 STEP 1  DO
+        IF (htab[htab.keys[i]] > 1) THEN
+            sum += htab.keys[i]
+        END_IF
+    END_FOR
+
+    Write(sum)
+
+END

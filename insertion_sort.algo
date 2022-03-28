@@ -1,0 +1,19 @@
+FUNCTION InsertionSort(arr : ARRAY_OF INTEGER) : ARRAY_OF INTEGER // the array can be also of type float
+VAR
+    i, j , current_key : INTEGER
+BEGIN
+    // the first loop (with index of i) will select the element that will be inserted
+    FOR i FROM 1 TO arr.length-1 STEP 1  DO
+        current_key = arr[i]
+        // j will be responsible for selecting elements that are to the left of the current_key
+        j = i-1
+        // Move elements of arr[0..j], that are greater than key, to one position ahead of their current position
+        WHILE (j>=0 and arr[j]> current_key) DO
+            arr[j+1] := arr[j]
+            j -=1
+        END_WHILE
+        // after we move elemnents that are greater than key we finally need to insert our key into its position
+        arr[j+1] := current_key
+    END_FOR
+    RETURN arr ;
+END
